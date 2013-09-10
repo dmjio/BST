@@ -1,4 +1,1 @@
-Binary Search Tree
-#################
-
-# Simple implementation of a binary search tree in haskell
+# Binary Search Tree in Haskell
