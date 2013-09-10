@@ -10,13 +10,18 @@ module BST
      -- * Min/Max Functions
     , min
     , max
-     -- * Root
+     -- * Search Operations
     , root
+    , find
+     -- * Singleton instance
+    , singleton
+     -- * Convenience Functions
+    , fromList
     ) where
 
-import           Prelude hiding (max, min)
+import           Prelude hiding (max, min, min, pred, succ)
 
-data BST a = Empty -- ^ Empty Leaf
+data BST a = Empty                  -- ^ Empty Leaf
            | Node a (BST a) (BST a) -- ^ Node
            deriving (Show)
 
@@ -66,10 +71,26 @@ post :: BST a -> [a]
 post Empty = []
 post (Node x l r) = post l ++ post r ++ [x]
 
+-- | Find Node
+find :: Ord a => a -> BST a -> Maybe a
+find _ Empty = Nothing
+find z (Node x l r) | x == z = Just z
+                    | x < z  = find z l
+                    | x > z  = find z r
+
+-- | From List
+fromList :: Ord a => [a] -> BST a
+fromList []  = Empty
+fromList [x] = singleton x
+fromList xs = foldr insert Empty xs
+
+-- | Singleton
+singleton :: Ord a => a -> BST a
+singleton x = Node x Empty Empty
+
 instance Functor BST where
     fmap _ Empty = Empty
     fmap f (Node x l r) = Node (f x) (fmap f l) (fmap f r)
-
 
 
 
