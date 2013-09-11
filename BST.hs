@@ -95,9 +95,3 @@ instance Functor BST where
 
 
 
-
-
-
-
-
-
